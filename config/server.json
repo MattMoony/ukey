@@ -1,0 +1,6 @@
+{
+    "host": "localhost",
+    "port": 4800,
+    "path": "D:\\code\\JavaScript\\node\\ukey\\tmp",
+    "emitPause": 1000
+}

@@ -1,0 +1,43 @@
+@import '_global';
+
+html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    main {
+        background-color: #761A1A;
+        padding: 25px;
+        border-radius: 15px;
+        max-width: 45%;
+        box-sizing: border-box;
+
+        h1 {
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .detailed {
+            margin-top: 5px;
+            border-top: 1.5px solid #CFBCBC;
+            padding-top: 5px;
+            font-size: .8em;
+            word-break: break-all;
+
+            .code {
+                font-family: monospace;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        max-width: 95% !important;
+    }
+}

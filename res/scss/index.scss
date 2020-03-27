@@ -1,0 +1,88 @@
+@import '_global';
+
+header {
+    background-color: #761A1A;
+    margin: 0;
+    padding: 10px 15px;
+    color: #E6C6C6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+        margin: 0;
+        font-family: 'Patua One', sans-serif;
+        font-weight: normal;
+    }
+
+    .host {
+        background-color: rgba(0,0,0,.5);
+        padding: 10px;
+        border-radius: 2.5px;
+        font-family: 'Noto Sans', sans-serif;
+
+        h3 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        p {
+            margin: 0;
+            font-size: .8em;
+            text-align: right;
+
+            .username {
+                color: #A2E5C4;
+            }
+
+            .hostname {
+                color: #AEAEE7;
+            }
+        }
+    }
+}
+
+article {
+    margin: 15px 25px;
+    padding: 15px;
+    background-color: #221B1B;
+    border-radius: 5px;
+    color: #CFBCBC;
+    font-family: 'Noto Sans', sans-serif;
+
+    h3 {
+        margin: 0;
+        font-size: 1.4em;
+        text-align: center;
+        font-weight: normal;
+    }
+
+    .resources {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & > canvas {
+            margin: 0 7.5px;
+            width: 45% !important;
+            min-width: 400px;
+            max-width: 600px;
+            height: auto !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    article {
+        .resources {
+            flex-direction: column;
+
+            & > canvas {
+                margin: 7.5px 0;
+                width: 100% !important;
+                max-width: 400px;
+                height: auto !important;
+            }
+        }
+    }           
+}

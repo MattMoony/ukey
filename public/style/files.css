@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans|Patua+One&display=swap");
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #181414;
+  font-family: "Noto Sans", sans-serif;
+  color: #CFBCBC;
+}
+html h1, html h2, html h3, html h4, html h5, html h6, body h1, body h2, body h3, body h4, body h5, body h6 {
+  font-family: "Patua One", sans-serif;
+  color: #E6C6C6;
+  font-weight: normal;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #761A1A;
+  color: #E6C6C6;
+  padding: 7.5px 10px;
+  font-size: 1.2em;
+}
+nav > a {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.2s ease;
+}
+nav > a:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+header {
+  background-color: #0E0D0D;
+  color: #C7B1B1;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+header .ip {
+  font-size: 1.08em;
+}
+header .username {
+  color: #A2E5C4;
+}
+header .hostname {
+  color: #AEAEE7;
+}
+
+article {
+  padding: 25px;
+  color: #CFBCBC;
+}
+article .file {
+  display: inline-block;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 3px;
+  transition: 0.1s ease;
+  color: #EA3131;
+  max-width: 80px;
+  text-align: center;
+  word-break: break-all;
+}
+article .file > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+article .file > div i {
+  font-size: 1.8em;
+  margin-bottom: 5px;
+}
+article .file:hover {
+  cursor: pointer;
+  background-color: #1D1A1A;
+  color: #EA315F;
+}
+article .file:not(:last-child) {
+  margin-right: 5px;
+}

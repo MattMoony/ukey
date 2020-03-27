@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ukey | Files</title>
+    <link rel="stylesheet" type="text/css" href="/style/files.css" />
+    <script src="https://kit.fontawesome.com/eeafe44cad.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <a href="/"><i class="fas fa-arrow-left"></i></a>
+    </nav>
+    <header>
+        <div class="ip">{{host.ip}}</div>
+        <div>
+            <span class="username">{{host.username}}</span>@<span class="hostname">{{host.hostname}}</span>
+        </div>
+    </header>
+    <article>
+    </article>
+    <script>
+        window.cuDir = {{dir|safe}};
+    </script>
+    <script src="/scripts/files.js"></script>
+</body>
+</html>

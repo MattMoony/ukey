@@ -1,0 +1,43 @@
+{
+  "name": "ukey",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist/* && tsc",
+    "start": "node dist/server",
+    "start:dev": "ts-node src/server",
+    "dev": "nodemon",
+    "dev:sass": "sass --watch res/scss:public/style --no-source-map",
+    "dev:sync": "browser-sync start --proxy \"localhost:4800\" --files public/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "diskusage": "^1.1.3",
+    "express": "^4.17.1",
+    "file-type": "^14.1.4",
+    "ip": "^1.1.5",
+    "nunjucks": "^3.2.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "@types/file-type": "^10.9.1",
+    "@types/ip": "^1.1.0",
+    "@types/node": "^12.12.31",
+    "@types/nunjucks": "^3.1.3",
+    "@types/socket.io": "^2.1.4",
+    "browser-sync": "^2.26.7",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.2",
+    "sass": "^1.26.3",
+    "ts-node": "^8.8.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.8.3"
+  }
+}

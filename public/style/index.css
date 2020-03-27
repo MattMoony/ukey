@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans|Patua+One&display=swap");
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #181414;
+  font-family: "Noto Sans", sans-serif;
+  color: #CFBCBC;
+}
+html h1, html h2, html h3, html h4, html h5, html h6, body h1, body h2, body h3, body h4, body h5, body h6 {
+  font-family: "Patua One", sans-serif;
+  color: #E6C6C6;
+  font-weight: normal;
+}
+
+header {
+  background-color: #761A1A;
+  margin: 0;
+  padding: 10px 15px;
+  color: #E6C6C6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 {
+  margin: 0;
+  font-family: "Patua One", sans-serif;
+  font-weight: normal;
+}
+header .host {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 2.5px;
+  font-family: "Noto Sans", sans-serif;
+}
+header .host h3 {
+  margin: 0;
+  font-size: 1.1em;
+}
+header .host p {
+  margin: 0;
+  font-size: 0.8em;
+  text-align: right;
+}
+header .host p .username {
+  color: #A2E5C4;
+}
+header .host p .hostname {
+  color: #AEAEE7;
+}
+
+article {
+  margin: 15px 25px;
+  padding: 15px;
+  background-color: #221B1B;
+  border-radius: 5px;
+  color: #CFBCBC;
+  font-family: "Noto Sans", sans-serif;
+}
+article h3 {
+  margin: 0;
+  font-size: 1.4em;
+  text-align: center;
+  font-weight: normal;
+}
+article .resources {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+article .resources > canvas {
+  margin: 0 7.5px;
+  width: 45% !important;
+  min-width: 400px;
+  max-width: 600px;
+  height: auto !important;
+}
+
+@media only screen and (max-width: 900px) {
+  article .resources {
+    flex-direction: column;
+  }
+  article .resources > canvas {
+    margin: 7.5px 0;
+    width: 100% !important;
+    max-width: 400px;
+    height: auto !important;
+  }
+}

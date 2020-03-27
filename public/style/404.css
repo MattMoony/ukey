@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans|Patua+One&display=swap");
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #181414;
+  font-family: "Noto Sans", sans-serif;
+  color: #CFBCBC;
+}
+html h1, html h2, html h3, html h4, html h5, html h6, body h1, body h2, body h3, body h4, body h5, body h6 {
+  font-family: "Patua One", sans-serif;
+  color: #E6C6C6;
+  font-weight: normal;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html main, body main {
+  background-color: #761A1A;
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 45%;
+  box-sizing: border-box;
+}
+html main h1, body main h1 {
+  margin: 0;
+}
+html main p, body main p {
+  margin: 0;
+}
+html main .detailed, body main .detailed {
+  margin-top: 5px;
+  border-top: 1.5px solid #CFBCBC;
+  padding-top: 5px;
+  font-size: 0.8em;
+  word-break: break-all;
+}
+html main .detailed .code, body main .detailed .code {
+  font-family: monospace;
+}
+
+@media only screen and (max-width: 600px) {
+  main {
+    max-width: 95% !important;
+  }
+}
