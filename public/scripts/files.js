@@ -3,7 +3,7 @@ function pathJoin(d, p) {
 }
 
 function getDir() {
-    return atob(window.location.href.replace(/https?:\/\//, '').split('/')[2]||'');
+    return atob(window.location.href.replace(/https?:\/\//, '').split('/')[2]||'')||'/';
 }
 
 function setDir(dir) {
@@ -52,6 +52,7 @@ function dispDir() {
         window.a.appendChild(d);
         if (f.type === 'dir') d.onclick = () => onDirClick(f.name);
         else d.onclick = () => onFileClick(f.name);
+        window.path.innerHTML = getDir();
     });
 }
 
@@ -71,6 +72,7 @@ function onFileClick(f) {
 
 window.onload = () => {
     window.a = document.getElementsByTagName('article')[0];
+    window.path = document.getElementById('path');
     dispDir();
 };
 

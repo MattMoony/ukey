@@ -43,6 +43,10 @@ header {
 header .ip {
   font-size: 1.08em;
 }
+header .ip #path {
+  margin-left: 1.5px;
+  color: #887a7a;
+}
 header .username {
   color: #A2E5C4;
 }
@@ -82,4 +86,25 @@ article .file:hover {
 }
 article .file:not(:last-child) {
   margin-right: 5px;
+}
+
+#action-bt {
+  background-color: #761A1A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  padding: 5px;
+  font-size: 1.7em;
+  box-shadow: 0 1.5px 5px #111;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  transition: 0.2s ease;
+}
+#action-bt:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }

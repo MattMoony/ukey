@@ -32,6 +32,11 @@ header {
 
     .ip {
         font-size: 1.08em;
+
+        #path {
+            margin-left: 1.5px;
+            color: rgb(136, 122, 122);
+        }
     }
 
     .username {
@@ -79,5 +84,27 @@ article {
         &:not(:last-child) {
             margin-right: 5px;
         }
+    }
+}
+
+#action-bt {
+    background-color: #761A1A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    padding: 5px;
+    font-size: 1.7em;
+    box-shadow: 0 1.5px 5px #111;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    transition: .2s ease;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
     }
 }

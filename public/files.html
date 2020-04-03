@@ -12,13 +12,18 @@
         <a href="/"><i class="fas fa-arrow-left"></i></a>
     </nav>
     <header>
-        <div class="ip">{{host.ip}}</div>
+        <div class="ip">
+            {{host.ip}}<span id="path">/</span>
+        </div>
         <div>
             <span class="username">{{host.username}}</span>@<span class="hostname">{{host.hostname}}</span>
         </div>
     </header>
     <article>
     </article>
+    <div id="action-bt">
+        <i class="fas fa-bolt"></i>
+    </div>
     <script>
         window.cuDir = {{dir|safe}};
     </script>

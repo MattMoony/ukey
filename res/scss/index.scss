@@ -42,6 +42,23 @@ header {
     }
 }
 
+nav {
+    background-color: #0E0D0D;
+    color: #B5A0A0;
+    padding: 5px 10px;
+
+    & > a {
+        text-decoration: none;
+        color: inherit;
+        transition: .1s ease;
+
+        &:hover {
+            cursor: pointer;
+            color: #B68888;
+        }
+    }
+}
+
 article {
     margin: 15px 25px;
     padding: 15px;
