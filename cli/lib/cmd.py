@@ -2,7 +2,7 @@ import os, readline
 import colorama as cr
 cr.init()
 from lib import client, misc
-from lib.commands import ls, put, get, clear, bye, pwd, cd
+from lib.commands import ls, put, get, clear, bye, pwd, cd, mkdir
 from argparse import ArgumentParser
 
 __client = None
@@ -21,6 +21,7 @@ CMDS = {
     'quit': bye.Bye,
     'pwd': pwd.Pwd,
     'cd': cd.Cd,
+    'mkdir': mkdir.Mkdir,
 }
 
 # --------------------------------------------------------------------------------------------------------------------------------------- #
@@ -64,11 +65,15 @@ def main_loop(host, port=None):
     if not port:
         port = 4800
     __init(host, port)
-    try:
-        while True:
-            __parse_cmd(input(__client.prompt()))
-    except KeyboardInterrupt:
-        __exit()
+    while True:
+        try:
+            print(__client.prompt())
+            __parse_cmd(input('$ '))
+        except KeyboardInterrupt:
+            print()
+        except EOFError:
+            __exit()
+            break
 
 if __name__ == '__main__':
     main_loop()

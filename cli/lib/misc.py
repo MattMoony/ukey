@@ -24,6 +24,58 @@ def print_table(tab):
     for r in tab:
         print(' '+' '.join([('{:>'+str(ms[i])+'s}').format(c) for i, c in enumerate(r)]))
 
+class ProgressBar(object):
+    def __init__(self, _max, title='', _val=None):
+        self.max = _max
+        self.title = title
+        self.val = _val or 0
+        self.w = 20
+        self.done = False
+        self.__refresh()
+
+    def update(self, val):
+        if self.done:
+            return
+        self.val = val
+        self.__refresh()
+        if self.val >= self.max:
+            self.end()
+
+    def inc(self, by):
+        self.update(self.val+by)
+
+    def end(self):
+        self.done = True
+        print('\r {} ['.format(self.title)+'='*self.w+'] 100.00% ... ')
+
+    def ensure_end(self):
+        if not self.done:
+            self.end()
+
+    def __refresh(self):
+        pc = int((self.val/self.max)*100)
+        print('\r {} ['.format(self.title)+'='*(pc//(100//self.w))+'-'*(self.w-pc//(100//self.w))+'] {:6.2f}% ...'.format(pc), end='')
+
+class FileUploadProgress(ProgressBar):
+    def __init__(self, fname, title='', chunks=128):
+        super().__init__(os.path.getsize(fname), title)
+        self.fname = fname
+        self.file = open(fname, 'rb')
+        self.size = os.path.getsize(fname)
+        self.len = self.size
+        self.chunks = chunks
+
+    def read(self):
+        data = self.file.read(self.chunks)
+        if not data:
+            self.ensure_end()
+            self.file.close()
+        self.inc(len(data))
+        return data
+
+    def __len__(self):
+        return self.size
+
 if __name__ == '__main__':
     clear()
     print(center_title("""█░█ █▄▀ █▀▀ █▄█
@@ -33,3 +85,9 @@ if __name__ == '__main__':
         [ 'd', 'ab', 'b', ],
         [ '-', 'c', 'd', ],
     ])
+
+    import time
+    pb = ProgressBar(100, 'Testing')
+    for i in range(1,101):
+        pb.update(i)
+        time.sleep(0.01)
