@@ -1,15 +1,20 @@
-import os, readline
+import os
 import colorama as cr
 cr.init()
 from lib import client, misc
 from lib.commands import ls, put, get, clear, bye, pwd, cd, mkdir
+from lib.commands.command import Command
 from argparse import ArgumentParser
+from typing import Dict
 
-__client = None
+if misc.unix():
+    import readline
+
+__client: client.Client = None
 
 # --------------------------------------------------------------------------------------------------------------------------------------- #
 
-CMDS = {
+CMDS: Dict[str, Command] = {
     'ls': ls.Ls,
     'dir': ls.Ls,
     'put': put.Put,
@@ -36,7 +41,7 @@ def __cmd_compl(text, state):
     if len(possb) == 1:
         return possb[0]
 
-def __parse_cmd(cmd):
+def __parse_cmd(cmd: str) -> None:
     args = cmd.split(' ')
     for c, o in CMDS.items():
         if c == args[0]:
@@ -46,10 +51,13 @@ def __parse_cmd(cmd):
         return
     misc.print_err('Unknown command "{}" ...'.format(args[0]))
 
-def __init(host, port=4800):
+def __init(host: str, port: int = 4800) -> None:
     global __client, CMDS
-    readline.parse_and_bind('tab: complete')
-    readline.set_completer(__cmd_compl)
+    if misc.unix():
+        readline.parse_and_bind('tab: complete')
+        readline.set_completer(__cmd_compl)
+    else:
+        misc.print_wrn('Consider using a UNIX-based OS for tab-completion ... ')
     try:
         __client = client.Client(host, port)
         for k, v in CMDS.items():
@@ -58,10 +66,10 @@ def __init(host, port=4800):
         misc.print_err(e.msg)
         os._exit(1)
 
-def __exit():
+def __exit() -> None:
     misc.clear()
 
-def main_loop(host, port=None):
+def main_loop(host: str, port: int = None) -> None:
     if not port:
         port = 4800
     __init(host, port)

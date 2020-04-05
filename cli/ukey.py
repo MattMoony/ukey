@@ -1,7 +1,7 @@
 from lib import misc, cmd
 from argparse import ArgumentParser
 
-def main():
+def main() -> None:
     parser = ArgumentParser()
     parser.add_argument(dest='host', type=str, help='Specify the host address ... ')
     parser.add_argument('-p', '--port', dest='port', type=int, help='Specify the host port ... ')

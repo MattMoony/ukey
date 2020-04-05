@@ -1,9 +1,10 @@
 from lib import misc
 from lib.commands.command import Command
 from argparse import ArgumentParser
+from typing import List
 
 class Get(Command):
-    def exec(self, args):
+    def exec(self, args: List[str]) -> None:
         prsr = ArgumentParser()
         prsr.add_argument(dest='f', type=str, nargs='?')
         prsr.add_argument('-p', dest='p', type=str)

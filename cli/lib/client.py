@@ -5,37 +5,38 @@ import requests_toolbelt as reqt
 import colorama as cr
 cr.init()
 from lib import misc
+from typing import Any
 
 class InvalidClientException(Exception):
-    def __init__(self, msg='Invalid Client!'):
-        self.msg = msg
+    def __init__(self, msg: str = 'Invalid Client!') -> None:
+        self.msg: str = msg
 
-    def __str__(self):
+    def __str__(self) -> str:
         return 'InvalidClientException: {}'.format(self.msg)
 
 class Client(object):
-    def __init__(self, host='localhost', port='4800'):
-        self.host = host
-        self.port = port
-        self.path = '/'
-        self.sess = req.Session()
+    def __init__(self, host: str = 'localhost', port: int = '4800') -> None:
+        self.host: str = host
+        self.port: int = port
+        self.path: str = '/'
+        self.sess: req.Session = req.Session()
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         if not self.__conn_work():
             raise InvalidClientException('"{}" did not respond properly ... '.format(self.hoststr()))
 
-    def __conn_work(self):
+    def __conn_work(self) -> bool:
         try:
             return bool(self.hostinfo())
         except Exception:
             return False
 
-    def __benc(self, p):
+    def __benc(self, p: str) -> str:
         return b64.b64encode(p.encode()).decode()
 
-    def __bdec(self, p):
+    def __bdec(self, p: str) -> str:
         return b64.b64decode(p).decode()
 
-    def __isdir(self, d):
+    def __isdir(self, d: str) -> bool:
         try:
             res = self.sess.get(self.url()+'fs/'+self.__benc(d), verify=False)
             if res.status_code != 200:
@@ -45,7 +46,7 @@ class Client(object):
         except Exception:
             return False
 
-    def __isfile(self, file):
+    def __isfile(self, file: str) -> bool:
         d = os.path.dirname(file)
         if not self.__isdir(d):
             return False
@@ -54,32 +55,32 @@ class Client(object):
                 return True
         return False
 
-    def __resolve(self, p):
+    def __resolve(self, p: str) -> str:
         return os.path.abspath(p).replace(os.getcwd(), '') or '/'
 
-    def hostinfo(self):
+    def hostinfo(self) -> Any:
         res = self.sess.get(self.url()+'host', verify=False)
         if res.status_code != 200:
             return None
         return json.loads(res.text)
 
-    def hoststr(self, hname=None):
+    def hoststr(self, hname: str = '') -> str:
         return '{}:{}'.format(hname if hname else self.host, self.port)
 
-    def url(self):
+    def url(self) -> str:
         return 'https://{}/'.format(self.hoststr())
 
-    def prompt(self):
+    def prompt(self) -> str:
         hosti = self.hostinfo()
         return '{}{}{}{}@{}{}{};{}{}{}{}'.format(cr.Style.BRIGHT, cr.Fore.LIGHTGREEN_EX, hosti['username'], cr.Fore.LIGHTBLACK_EX, 
             cr.Fore.LIGHTBLUE_EX, self.hoststr(hosti['hostname']), cr.Fore.LIGHTBLACK_EX, cr.Fore.LIGHTRED_EX, self.path, cr.Fore.RESET, 
             cr.Style.RESET_ALL)
 
-    def wprompt(self):
+    def wprompt(self) -> str:
         hosti = self.hostinfo()
         return '{}@{};{}$ '.format(hosti['username'], self.hoststr(hosti['hostname']), self.path)
 
-    def ls(self, d=None):
+    def ls(self, d: str = '') -> Any:
         if not d:
             d = self.path
         res = self.sess.get(self.url()+'fs/'+self.__benc(d), verify=False)
@@ -90,14 +91,14 @@ class Client(object):
             return None
         return res['dir']
 
-    def dl(self, fpath, dlpath=None):
+    def dl(self, fpath: str, dlpath: str = '') -> Any:
         if not os.path.isabs(fpath):
             fpath = os.path.join(self.path, fpath)
         if not dlpath:
             dlpath = os.getcwd()
         res = self.sess.get(self.url()+'f/'+self.__benc(fpath), stream=True, verify=False)
         if res.status_code != 200:
-            return None
+            return ''
         fname = list(os.path.splitext(os.path.join(dlpath, os.path.basename(fpath))))
         if os.path.isfile(''.join(fname)):
             i = 1
@@ -112,13 +113,13 @@ class Client(object):
         pb.ensure_end()
         return os.path.abspath(''.join(fname))
 
-    def ul(self, fpath, tpath=None):
+    def ul(self, fpath: str, tpath: str = '') -> str:
         if not os.path.isabs(fpath):
             fpath = os.path.join(os.getcwd(), fpath)
         if not tpath:
             tpath = os.path.basename(fpath)
         if not os.path.isfile(fpath):
-            return None
+            return ''
         tpath = os.path.join(self.path, tpath)
         fname = list(os.path.splitext(tpath))
         if self.__isfile(''.join(fname)):
@@ -128,29 +129,29 @@ class Client(object):
             fname[0] = fname[0]+'_'+str(i)
         pb = misc.ProgressBar(os.path.getsize(fpath), title='Uploading "{}"'.format(os.path.basename(fpath)))
         e = reqt.MultipartEncoder(fields=dict(file=(os.path.basename(''.join(fname)), open(fpath, 'rb'),)))
-        def up(mon):
+        def up(mon: reqt.MultipartEncoderMonitor) -> None:
             pb.update(mon.bytes_read)
         m = reqt.MultipartEncoderMonitor(e, up)
         res = self.sess.post(self.url()+'u/'+self.__benc(''.join(fname)), data=m, headers={'Content-Type': m.content_type,})
         if res.status_code != 200:
-            return None
+            return ''
         return ''.join(fname)
 
-    def cd(self, d):
+    def cd(self, d: str) -> str:
         nd = self.__resolve(os.path.join(self.path, d))
         if not self.__isdir(nd):
-            return None
+            return ''
         self.path = nd
         return nd
 
-    def mkdir(self, d):
+    def mkdir(self, d: str) -> str:
         td = os.path.join(self.path, d)
         if self.__isdir(td):
-            return None
+            return ''
         res = self.sess.post(self.url()+'mk/'+self.__benc(td))
         if res.status_code != 200:
-            return None
+            return ''
         return td
 
-    def pwd(self):
+    def pwd(self) -> str:
         return '{} {}[{}]{}'.format(self.path, cr.Fore.LIGHTBLACK_EX, b64.b64encode(self.path.encode()).decode(), cr.Fore.RESET)

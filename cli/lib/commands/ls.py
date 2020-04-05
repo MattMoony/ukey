@@ -3,9 +3,10 @@ from lib import misc
 from argparse import ArgumentParser
 import colorama as cr
 cr.init()
+from typing import List
 
 class Ls(Command):
-    def exec(self, args):
+    def exec(self, args: List[str]) -> None:
         prsr = ArgumentParser()
         prsr.add_argument(dest='d', type=str, nargs='?')
         prsr.add_argument('-l', dest='l', action='store_true')

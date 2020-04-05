@@ -1,9 +1,10 @@
 from lib import misc
 from lib.commands.command import Command
 from argparse import ArgumentParser
+from typing import List
 
 class Mkdir(Command):
-    def exec(self, args):
+    def exec(self, args: List[str]) -> None:
         prsr = ArgumentParser()
         prsr.add_argument(dest='d', type=str, nargs='*')
         ar = prsr.parse_args(args)

@@ -3,3 +3,4 @@ dist
 tmp/*
 !tmp/.gitkeep
 __pycache__
+.mypy_cache
