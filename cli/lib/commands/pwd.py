@@ -3,4 +3,4 @@ from typing import List
 
 class Pwd(Command):
     def exec(self, args: List[str]):
-        print(self.cl.pwd())
+        print(' '+self.cl.pwd())

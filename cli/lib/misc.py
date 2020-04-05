@@ -1,9 +1,9 @@
 import shutil, sys, os
 import colorama as cr
 cr.init()
-from typing import List
+from typing import List, BinaryIO
 
-def center_title(title: str) -> None:
+def center_title(title: str) -> str:
     w = shutil.get_terminal_size().columns
     p = (w-max(map(lambda l: len(l), title.split('\n'))))//2
     return '\n'.join([' '*p + l for l in title.split('\n')])
@@ -65,7 +65,7 @@ class FileUploadProgress(ProgressBar):
     def __init__(self, fname: str, title: str = '', chunks: int = 128) -> None:
         super().__init__(os.path.getsize(fname), title)
         self.fname: str     = fname
-        self.file: file     = open(fname, 'rb')
+        self.file: BinaryIO = open(fname, 'rb')
         self.size: int      = os.path.getsize(fname)
         self.len: int       = self.size
         self.chunks: int    = chunks
@@ -80,19 +80,3 @@ class FileUploadProgress(ProgressBar):
 
     def __len__(self) -> int:
         return self.size
-
-if __name__ == '__main__':
-    clear()
-    print(center_title("""█░█ █▄▀ █▀▀ █▄█
-█▄█ █░█ ██▄ ░█░"""))
-    print_err('TEST-ERROR!')
-    print_table([
-        [ 'd', 'ab', 'b', ],
-        [ '-', 'c', 'd', ],
-    ])
-
-    import time
-    pb = ProgressBar(100, 'Testing')
-    for i in range(1,101):
-        pb.update(i)
-        time.sleep(0.01)

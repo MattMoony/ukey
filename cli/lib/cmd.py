@@ -5,7 +5,7 @@ from lib import client, misc
 from lib.commands import ls, put, get, clear, bye, pwd, cd, mkdir
 from lib.commands.command import Command
 from argparse import ArgumentParser
-from typing import Dict
+from typing import Dict, Optional
 
 if misc.unix():
     import readline
@@ -41,12 +41,17 @@ def __cmd_compl(text, state):
     if len(possb) == 1:
         return possb[0]
 
+def __get_cmd(cmdn: str) -> Command:
+    for c, o in CMDS.items():
+        if c == cmdn:
+            return o
+
 def __parse_cmd(cmd: str) -> None:
     args = cmd.split(' ')
-    for c, o in CMDS.items():
-        if c == args[0]:
-            o.exec(args[1:])
-            return
+    c = __get_cmd(args[0])
+    if c:
+        c.exec(args[1:])
+        return
     if not args[0].strip():
         return
     misc.print_err('Unknown command "{}" ...'.format(args[0]))
@@ -63,13 +68,13 @@ def __init(host: str, port: int = 4800) -> None:
         for k, v in CMDS.items():
             CMDS[k] = v(__client)
     except Exception as e:
-        misc.print_err(e.msg)
+        misc.print_err(str(e))
         os._exit(1)
 
 def __exit() -> None:
     misc.clear()
 
-def main_loop(host: str, port: int = None) -> None:
+def main_loop(host: str, port: Optional[int]) -> None:
     if not port:
         port = 4800
     __init(host, port)
@@ -82,6 +87,3 @@ def main_loop(host: str, port: int = None) -> None:
         except EOFError:
             __exit()
             break
-
-if __name__ == '__main__':
-    main_loop()

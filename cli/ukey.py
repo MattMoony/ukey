@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 def main() -> None:
     parser = ArgumentParser()
     parser.add_argument(dest='host', type=str, help='Specify the host address ... ')
-    parser.add_argument('-p', '--port', dest='port', type=int, help='Specify the host port ... ')
+    parser.add_argument('-p', '--port', dest='port', type=int, help='Specify the host port ... ', default=4800)
 
     args = parser.parse_args()
 

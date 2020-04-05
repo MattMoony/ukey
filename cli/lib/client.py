@@ -15,7 +15,7 @@ class InvalidClientException(Exception):
         return 'InvalidClientException: {}'.format(self.msg)
 
 class Client(object):
-    def __init__(self, host: str = 'localhost', port: int = '4800') -> None:
+    def __init__(self, host: str = 'localhost', port: int = 4800) -> None:
         self.host: str = host
         self.port: int = port
         self.path: str = '/'
@@ -41,8 +41,8 @@ class Client(object):
             res = self.sess.get(self.url()+'fs/'+self.__benc(d), verify=False)
             if res.status_code != 200:
                 return False
-            res = json.loads(res.text)
-            return 'success' in res.keys() and res['success']
+            body = json.loads(res.text)
+            return 'success' in body.keys() and body['success']
         except Exception:
             return False
 
@@ -86,20 +86,20 @@ class Client(object):
         res = self.sess.get(self.url()+'fs/'+self.__benc(d), verify=False)
         if res.status_code != 200:
             return None
-        res = json.loads(res.text)
-        if 'success' not in res.keys() or not res['success']:
+        body = json.loads(res.text)
+        if 'success' not in body.keys() or not body['success']:
             return None
-        return res['dir']
+        return body['dir']
 
     def dl(self, fpath: str, dlpath: str = '') -> Any:
         if not os.path.isabs(fpath):
             fpath = os.path.join(self.path, fpath)
         if not dlpath:
-            dlpath = os.getcwd()
+            dlpath = os.path.basename(fpath)
         res = self.sess.get(self.url()+'f/'+self.__benc(fpath), stream=True, verify=False)
         if res.status_code != 200:
             return ''
-        fname = list(os.path.splitext(os.path.join(dlpath, os.path.basename(fpath))))
+        fname = list(os.path.splitext(dlpath))
         if os.path.isfile(''.join(fname)):
             i = 1
             while os.path.isfile(fname[0]+'_'+str(i)+fname[1]):
